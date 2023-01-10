@@ -64,8 +64,15 @@ export function App() {
             if (newValue === null) {
               return
             }
-
-            await loadTransactionsByEmployee(newValue.id)
+            
+            // If new value holds the 'All Employees' selection, then select transactions from all employees
+            // Alternatively could also check for the absence of an employee id
+            if (newValue.firstName === "All" && newValue.lastName === "Employees") {
+              await loadAllTransactions()
+            } else {
+              // Only load transaction by employee if there is an employee id to reference
+              await loadTransactionsByEmployee(newValue.id)
+            }
           }}
         />
 
